@@ -1,0 +1,27 @@
+{
+	"name": "promise-snake",
+	"version": "0.9.0",
+	"description": "Continuous asynchronous operation for ES6 Promise",
+	"main": "index.js",
+	"types": "index.d.ts",
+	"scripts": {},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/E0SelmY4V/promise-snake.git"
+	},
+	"keywords": [
+		"promise",
+		"promises",
+		"async",
+		"flow-control",
+		"fluent",
+		"util",
+		"utility"
+	],
+	"author": "e0selmy4v",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/E0SelmY4V/promise-snake/issues"
+	},
+	"homepage": "https://github.com/E0SelmY4V/promise-snake#readme"
+}
