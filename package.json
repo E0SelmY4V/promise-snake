@@ -1,6 +1,6 @@
 {
 	"name": "promise-snake",
-	"version": "0.9.0",
+	"version": "1.0.0",
 	"description": "Continuous asynchronous operation for ES6 Promise",
 	"main": "index.js",
 	"types": "index.d.ts",
