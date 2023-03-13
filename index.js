@@ -6,12 +6,16 @@
  */
 "use strict";
 
-Promise.prototype.next = function (executor) {
-	return this.then(() => new Promise(executor));
-};
+(() => {
+	const pro = (t) => typeof t?.then === 'function' ? t : Promise.resolve();
 
-Promise.snake = (executors) => {
-	let promise = Promise.resolve();
-	executors.forEach(executor => promise = promise.next(executor));
-	return promise;
-};
+	Promise.prototype.next = Promise.next = function (executor) {
+		return pro(this).then(() => new Promise(executor));
+	};
+
+	Promise.prototype.snake = Promise.snake = function (executors) {
+		let promise = pro(this);
+		executors.forEach(executor => promise = promise.next(executor));
+		return promise;
+	};
+})();

@@ -15,8 +15,19 @@ declare global {
 		 * @param executor The callback used to initialize 'another Promise'.
 		 */
 		next<T>(executor: Promise.Executor<T>): Promise<T>;
+		/**
+		 * Create promises one by one to do asynchronous operations when this
+		 * Promise has been resolved.
+		 * @param executors Callbacks used to initialize the promises.
+		 */
+		snake(executors: readonly Promise.Executor<void>[]): Promise<void>;
 	}
 	interface PromiseConstructor {
+		/**
+		 * Create a Promise, just like {@link PromiseConstructor}.
+		 * @param executor The callback used to initialize the Promise.
+		 */
+		next<T>(executor: Promise.Executor<T>): Promise<T>;
 		/**
 		 * Create promises one by one to do asynchronous operations.
 		 * @param executors Callbacks used to initialize the promises.
