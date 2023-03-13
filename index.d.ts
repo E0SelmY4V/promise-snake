@@ -1,5 +1,3 @@
-import '';
-
 /**
  * Continuous asynchronous operation for ES6 Promise
  * @module promise-snake
@@ -8,15 +6,17 @@ import '';
  */
 declare module 'promise-snake';
 
-type AnyF<P extends AnyT = AnyT, R = any> = (...arg: P) => R
-type AnyT<T = any> = readonly T[]
+import '';
+
+type AnyF<P extends AnyT = AnyT, R = any> = (...arg: P) => R;
+type AnyT<T = any> = readonly T[];
 type Last<T> = T extends readonly [...any[], infer N] ? N : void;
-type Tail<T> = T extends readonly [...infer N, any] ? N : []
+type Tail<T> = T extends readonly [...infer N, any] ? N : [];
 type Part<T> = T | undefined | null;
-type Ifer<T, P = never> = T extends AnyT<never> ? P : T extends AnyT<infer S> ? S : P
-type Rtn<S extends AnyT<AnyF>, T = void> = ReturnType<Ifer<S, () => T>>
-type Rtns<S extends AnyT<AnyF>, R extends AnyT = []> = S extends [AnyF<AnyT, infer E>, ...infer S extends AnyT<AnyF>] ? Rtns<S, [...R, E]> : R
-type Gfns<P extends AnyT, R extends AnyT<AnyF> = readonly []> = P extends [infer A, infer B, ...infer P] ? Gfns<[B, ...P], readonly [...R, (value: A) => B]> : R
+type Ifer<T, P = never> = T extends AnyT<never> ? P : T extends AnyT<infer S> ? S : P;
+type Rtn<S extends AnyT<Part<AnyF>>, T = void> = ReturnType<Ifer<S, () => T> & {}>;
+type Rtns<S extends AnyT<AnyF>, R extends AnyT = []> = S extends [AnyF<AnyT, infer E>, ...infer S extends AnyT<AnyF>] ? Rtns<S, [...R, E]> : R;
+type Gfns<P extends AnyT, R extends AnyT<AnyF> = readonly []> = P extends [infer A, infer B, ...infer P] ? Gfns<[B, ...P], readonly [...R, (value: A) => B]> : R;
 declare global {
 	interface Promise<T> {
 		/**
@@ -35,7 +35,7 @@ declare global {
 		 * @param onfulfilleds The callback list to execute when the Promise is
 		 * resolved.
 		 */
-		thens<K extends AnyT<AnyF<[value: any]>>>(onfulfilleds: readonly [...K]): Promise<Awaited<Rtn<K, T>>>
+		thens<K extends AnyT<Part<AnyF<[value: any]>>>>(onfulfilleds: readonly [...K]): Promise<Awaited<Rtn<K, T>>>;
 	}
 	interface PromiseConstructor {
 		/**
@@ -52,7 +52,7 @@ declare global {
 		 * Do callbacks one by one.
 		 * @param onfulfilleds The callback list to execute.
 		 */
-		thens<K extends AnyT<AnyF<[value: any]>>>(onfulfilleds: readonly [...K]): Promise<Awaited<Rtn<K>>>
+		thens<K extends AnyT<Part<AnyF<[value: any]>>>>(onfulfilleds: readonly [...K]): Promise<Awaited<Rtn<K>>>;
 	}
 	namespace Promise {
 		/**

@@ -23,5 +23,5 @@
 		let promise = pro(this);
 		onfulfilleds.forEach(onfulfilled => promise = promise.then(onfulfilled));
 		return promise;
-	}
+	};
 })();
