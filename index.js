@@ -18,4 +18,10 @@
 		executors.forEach(executor => promise = promise.next(executor));
 		return promise;
 	};
+
+	Promise.prototype.thens = Promise.thens = function (onfulfilleds) {
+		let promise = pro(this);
+		onfulfilleds.forEach(onfulfilled => promise = promise.then(onfulfilled));
+		return promise;
+	}
 })();
