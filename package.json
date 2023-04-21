@@ -1,6 +1,6 @@
 {
 	"name": "promise-snake",
-	"version": "1.2.2",
+	"version": "1.2.3",
 	"description": "Continuous asynchronous operation for ES6 Promise",
 	"main": "index.js",
 	"types": "index.d.ts",
@@ -29,5 +29,12 @@
 	"devDependencies": {
 		"typescript": ""
 	},
+	"files": [
+		"LICENSE",
+		"README.md",
+		"index.ts",
+		"index.js",
+		"index.js.map"
+	],
 	"homepage": "https://github.com/E0SelmY4V/promise-snake#readme"
 }

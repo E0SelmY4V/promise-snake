@@ -1,6 +1,7 @@
 /**
  * Continuous asynchronous operation for ES6 Promise
  * @module promise-snake
+ * @version 1.2.3
  * @license MIT
  * @link https://github.com/E0SelmY4V/promise-snake
  */
