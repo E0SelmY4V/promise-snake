@@ -119,10 +119,12 @@ type LRtn<S extends AnyT<Part<AnyF>>, T = void> = ReturnType<Sure<RepedNil<Last<
 	};
 
 	Array.prototype.forEachAsync = async function (callbackfn, thisArg) {
+		typeof thisArg !== 'undefined' && (callbackfn = callbackfn.bind(thisArg));
 		await Promise.thens(this.map((...args) => () => callbackfn(...args), thisArg));
 	};
 
 	Array.prototype.mapAsync = async function (callbackfn, thisArg) {
+		typeof thisArg !== 'undefined' && (callbackfn = callbackfn.bind(thisArg));
 		const rslt: any[] = [];
 		await Promise.thens(this.map((...args) => async () => rslt.push(await callbackfn(...args)), thisArg));
 		return rslt;
