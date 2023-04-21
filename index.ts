@@ -54,9 +54,23 @@ declare global {
 		 */
 		type Executor<T> = (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void;
 	}
+	interface Array<T> {
+		/**
+		 * Performs the specified action for each element in an array.
+		 * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
+		 * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+		 */
+		forEachAsync(callbackfn: (value: T, index: number, array: T[]) => void | PromiseLike<void>, thisArg?: any): Promise<void>;
+		/**
+		 * Calls a defined callback function on each element of an array, and returns an array that contains the results.
+		 * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
+		 * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+		 */
+		mapAsync<U>(callbackfn: (value: T, index: number, array: T[]) => U | PromiseLike<U>, thisArg?: any): Promise<U[]>;
+	}
 }
 
-import Executor = Promise.Executor
+import Executor = Promise.Executor;
 
 type AnyF<P extends AnyT = AnyT, R = any> = (...arg: P) => R;
 type AnyT<T = any> = readonly T[];
@@ -86,7 +100,7 @@ type NoNil<N extends AnyT> = SWArray<N> extends SWTmpl<infer A> ? [...LtdNoNil<A
 type LRtn<S extends AnyT<Part<AnyF>>, T = void> = ReturnType<Sure<RepedNil<Last<NoNil<S>>, 0>, AnyF, () => T>>;
 
 (() => {
-	const pro = (t: Promise<any> | typeof Promise) => t && 'then' in t && typeof t?.then === 'function' ? t: Promise.resolve();
+	const pro = (t: Promise<any> | typeof Promise) => t && 'then' in t && typeof t?.then === 'function' ? t : Promise.resolve();
 
 	Promise.prototype.next = Promise.next = function (executor) {
 		return pro(this).then(() => new Promise(executor));
@@ -102,6 +116,16 @@ type LRtn<S extends AnyT<Part<AnyF>>, T = void> = ReturnType<Sure<RepedNil<Last<
 		let promise = pro(this);
 		onfulfilleds.forEach(onfulfilled => promise = promise.then(onfulfilled));
 		return promise;
+	};
+
+	Array.prototype.forEachAsync = async function (callbackfn, thisArg) {
+		await Promise.thens(this.map((...args) => () => callbackfn(...args), thisArg));
+	};
+
+	Array.prototype.mapAsync = async function (callbackfn, thisArg) {
+		const rslt: any[] = [];
+		await Promise.thens(this.map((...args) => async () => rslt.push(await callbackfn(...args)), thisArg));
+		return rslt;
 	};
 })();
 

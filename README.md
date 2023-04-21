@@ -32,13 +32,14 @@ import * as fsp from 'fs/promises';
 import 'promise-snake';
 
 const files = ['a.txt', 'b.txt', 'c.txt'];
-const datas = [];
 
-Promise.snake(files.map(file =>
-  async (res) => {
-    const data = await fsp.readFile(file);
-    datas.push(data);
-    return res();
-  }
-));
+(async () => {
+  
+  const txts = files.mapAsync(async (file) => {
+    const txt = await fsp.readFile(file);
+    return `${txt}`;
+  });
+
+  console.log(await txts);
+})();
 ```
