@@ -4,7 +4,10 @@
 	"description": "Continuous asynchronous operation for ES6 Promise",
 	"main": "index.js",
 	"types": "index.d.ts",
-	"scripts": {},
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsx -w"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/E0SelmY4V/promise-snake.git"
@@ -22,6 +25,9 @@
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/E0SelmY4V/promise-snake/issues"
+	},
+	"devDependencies": {
+		"typescript": ""
 	},
 	"homepage": "https://github.com/E0SelmY4V/promise-snake#readme"
 }
