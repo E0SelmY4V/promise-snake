@@ -52,7 +52,9 @@ declare global {
 		 * with a value or the result of another promise, and a reject callback
 		 * used to reject the promise with a provided reason or error.
 		 */
-		type Executor<T> = (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void;
+		interface Executor<T> {
+			(resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void): void;
+		}
 	}
 	interface Array<T> {
 		/**
